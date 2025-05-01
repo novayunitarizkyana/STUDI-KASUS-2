@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Konversi Mata Uang IDR & MYR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2> Konversi Mata Uang</h2>
+
+  <label for="amount">Masukkan nilai uang:</label>
+  <input type="number" id="amount" placeholder="Contoh: 100000" />
+
+  <label for="fromCurrency">Dari mata uang:</label>
+  <select id="fromCurrency">
+    <option value="IDR">IDR - Rupiah</option>
+    <option value="MYR">MYR - Ringgit</option>
+  </select>
+
+  <label for="toCurrency">Ke mata uang:</label>
+  <select id="toCurrency">
+    <option value="MYR">MYR - Ringgit</option>
+    <option value="IDR">IDR - Rupiah</option>
+  </select>
+
+  <button id="convertBtn">Lihat Hasil</button>
+
+  <div class="result" id="result">Hasil konversi akan ditampilkan di sini.</div>
+
+  <script>
+    
+    const rates = {
+      IDR: { MYR: 0.00030, IDR: 1 },
+      MYR: { IDR: 3300, MYR: 1 }
+    };
+
+    const amountInput = document.getElementById('amount');
+    const fromCurrency = document.getElementById('fromCurrency');
+    const toCurrency = document.getElementById('toCurrency');
+    const resultDiv = document.getElementById('result');
+    const convertBtn = document.getElementById('convertBtn');
+
+    function convertCurrency() {
+      const amount = parseFloat(amountInput.value);
+      const from = fromCurrency.value;
+      const to = toCurrency.value;
+
+      if (isNaN(amount) || amount <= 0) {
+        resultDiv.textContent = "Masukkan nilai uang yang valid (lebih besar dari 0).";
+        return;
+      }
+
+      if (from === to) {
+        resultDiv.textContent = "Mata uang asal dan tujuan tidak boleh sama.";
+        return;
+      }
+
+      const rate = rates[from][to];
+      const converted = amount * rate;
+
+      resultDiv.textContent = `Nilai uang sebesar ${amount.toLocaleString()} dari mata uang ${from} dikonversi ke mata uang ${to} adalah ${converted.toFixed(2)}.`;
+
+    }
+
+    convertBtn.addEventListener('click', convertCurrency);
+  </script>
+</body>
+</html>
+
